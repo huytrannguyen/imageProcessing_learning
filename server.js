@@ -37,7 +37,7 @@ import {filterImageFromURL, deleteLocalFiles, checkImageUrl} from './util/util.j
     }
 
     if(!checkImageUrl(image_url)) {
-      return res.status(402).send("The url is not valid. It must contain one of these extensions: .jpg, .png, .jpeg")
+      return res.status(422).send("The url is not valid. It must contain one of these extensions: .jpg, .png, .jpeg")
     }
     const outputUrl = await filterImageFromURL(image_url)
     return res.status(200).send(`Output image: ${outputUrl}`);
