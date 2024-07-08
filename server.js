@@ -39,8 +39,14 @@ import {filterImageFromURL, deleteLocalFiles, checkImageUrl} from './util/util.j
     if(!checkImageUrl(image_url)) {
       return res.status(422).send("The url is not valid. It must contain one of these extensions: .jpg, .png, .jpeg")
     }
+
     const outputPath = await filterImageFromURL(image_url)
-    return res.status(200).sendFile(outputPath);
+    res.status(200).sendFile(outputPath, err => {
+      if(err) {
+        res.sendStatus(500);
+      }
+      deleteLocalFiles([outputPath])
+    });
   });
   
   // Root Endpoint
